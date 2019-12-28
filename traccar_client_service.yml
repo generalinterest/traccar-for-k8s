@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    run: traccar
+  name: traccar-client
+spec:
+  type: NodePort
+  ports:
+    - port: 5055
+      protocol: TCP
+      nodePort: 32055
+      name: client
+  selector:
+    run: traccar

@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    run: traccar
+  name: traccar
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: traccar
+  template:
+    metadata:
+      labels:
+        run: traccar
+    spec:
+      containers:
+      - image: generalinterest/traccar:latest
+        name: traccar
+        resources: {}
+        volumeMounts:
+        - name: traccar-xml
+          mountPath: /opt/traccar/conf
+      volumes:
+      - name: traccar-xml
+        configMap:
+          name: traccar
+status: {}
