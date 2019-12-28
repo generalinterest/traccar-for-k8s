@@ -20,6 +20,7 @@ combing part1 and part to create a well formed traccar_configmap.yml
 k apply -f traccar.yml 
 
 k apply -f traccar_service.yml
+
 k apply -f traccar_client_service.yml
 
 k apply -f traccar_ingress.yml
