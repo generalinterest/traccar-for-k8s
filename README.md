@@ -1,7 +1,5 @@
 # traccar-for-k8s
-the traccar mysql database is running on pimysql.home
-login as traccar/traccar
-database is traccar
+
 
 creating a configmap for the traccar.xml and default.yml to keep our database credentials obscure.
 
