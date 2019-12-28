@@ -21,14 +21,6 @@ k apply -f traccar_client_service.yml
 k apply -f traccar_ingress.yml
 
 
-mikrotik firewall nat for port 7355 to 192.168.10.49:32055
-
-
-external url 
-lucy.generalinterest.net:7355
-internal url
-traccar.pik8s.home
-
 
 
 cat Dockerfile
