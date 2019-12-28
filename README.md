@@ -42,6 +42,7 @@ RUN set -ex && \
     unzip -qo /tmp/traccar.zip -d /opt/traccar && \
     rm /tmp/traccar.zip && \
     apk del wget
+    
 COPY traccar.xml /opt/traccar/conf/
 
 ENTRYPOINT ["java", "-Xms512m", "-Xmx512m", "-Djava.net.preferIPv4Stack=true"]
