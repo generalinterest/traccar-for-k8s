@@ -29,6 +29,7 @@ k apply -f traccar_ingress.yml
 
 
 cat Dockerfile
+
 FROM openjdk:8-jre-alpine
 
 ENV TRACCAR_VERSION 4.6
