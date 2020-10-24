@@ -25,4 +25,5 @@ spec:
       - name: traccar-xml
         configMap:
           name: traccar
-status: {}
+      nodeSelector:
+        kubernetes.io/arch: arm
