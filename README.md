@@ -1,6 +1,6 @@
 # traccar-for-k8s
 
-update conf/traccar.yml with your mysql database access
+update conf/traccar.xml with your mysql database access
 
 creating a configmap for the traccar.xml and default.yml
 
