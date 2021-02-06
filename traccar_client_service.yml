@@ -5,11 +5,10 @@ metadata:
     run: traccar
   name: traccar-client
 spec:
-  type: NodePort
+  type: LoadBalancer
   ports:
     - port: 5055
       protocol: TCP
-      nodePort: 32055
       name: client
   selector:
     run: traccar

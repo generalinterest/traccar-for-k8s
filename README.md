@@ -1,21 +1,9 @@
 # traccar-for-k8s
 
 
-creating a configmap for the traccar.xml and default.yml to keep our database credentials obscure.
+creating a configmap for the traccar.xml and default.yml
 
-k create configmap traccar-xml --from-file conf/traccar.xml
-
-k create configmap default-xml --from-file conf/default.xml
-
-k get configmap traccar-xml -o yaml > part1.yml
-
-k get configmap default-xml -o yaml > part2.yml
-
-
-combing part1 and part to create a well formed traccar_configmap.yml
-
- k apply -f traccar_configmap.yml
-
+k create configmap traccar --from-file conf/traccar.xml  --from-file conf/default.xml
 
 k apply -f traccar.yml 
 
