@@ -18,20 +18,20 @@ k apply -f traccar_ingress.yml
 
 
 cat Dockerfile
+FROM ubuntu
 
-FROM openjdk:8-jre-alpine
-
-ENV TRACCAR_VERSION 4.6
+ENV TRACCAR_VERSION 4.14
 
 WORKDIR /opt/traccar
 
-RUN set -ex && \
-    apk add --no-cache --no-progress wget && \
-    wget -qO /tmp/traccar.zip https://github.com/traccar/traccar/releases/download/v$TRACCAR_VERSION/traccar-other-$TRACCAR_VERSION.zip && \
+RUN apt-get update -y && \
+    apt-get install openjdk-17-jdk -y && \
+    apt-get install wget -y && \
+    apt-get install unzip -y && \
+    wget -O /tmp/traccar.zip --no-check-certificate https://github.com/traccar/traccar/releases/download/v$TRACCAR_VERSION/traccar-other-$TRACCAR_VERSION.zip && \
     unzip -qo /tmp/traccar.zip -d /opt/traccar && \
-    rm /tmp/traccar.zip && \
-    apk del wget
-    
+    rm /tmp/traccar.zip
+
 COPY traccar.xml /opt/traccar/conf/
 
 ENTRYPOINT ["java", "-Xms512m", "-Xmx512m", "-Djava.net.preferIPv4Stack=true"]
