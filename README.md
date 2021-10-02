@@ -18,6 +18,7 @@ k apply -f traccar_ingress.yml
 
 
 cat Dockerfile
+
 FROM ubuntu
 
 ENV TRACCAR_VERSION 4.14
