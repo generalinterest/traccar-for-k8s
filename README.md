@@ -40,4 +40,4 @@ ENTRYPOINT ["java", "-Xms512m", "-Xmx512m", "-Djava.net.preferIPv4Stack=true"]
 CMD ["-jar", "tracker-server.jar", "conf/traccar.xml"]
 
 
-
+test 123
