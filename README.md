@@ -1,5 +1,12 @@
 # traccar-for-k8s
 
+using podman now instead of Docker.
+
+podman multi-arch:
+
+IMAGE=myimage; TAG=v1; MANIFEST=docker.io/generalinterest/$IMAGE:$TAG; podman manifest rm $MANIFEST; podman manifest create $MANIFEST ; for arch in arm arm64 amd64; do podman buildx build --manifest $MANIFEST --platform linux/$arch --tag $MANIFEST-$arch .; done
+
+
 update conf/traccar.xml with your mysql database access
 
 creating a configmap for the traccar.xml and default.yml
