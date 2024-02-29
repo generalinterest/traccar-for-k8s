@@ -15,12 +15,15 @@ spec:
         run: traccar
     spec:
       containers:
-      - image: generalinterest/traccar:latest
+      - image: traccar/traccar:ubuntu
         name: traccar
         resources: {}
+        ports:
+        - containerPort: 8082
+          name: traccar-web-svc
         volumeMounts:
         - name: traccar-xml
-          mountPath: /opt/traccar/conf
+          mountPath: /opt/traccar/conf      
       volumes:
       - name: traccar-xml
         configMap:

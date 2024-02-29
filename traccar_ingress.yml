@@ -1,12 +1,13 @@
-apiVersion: networking.k8s.io/v1beta1
-kind: Ingress
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
 metadata:
   name: traccar
 spec:
-  rules:
-  - host: traccar.pik8s.home
-    http:
-      paths:
-      - backend:
-          serviceName: traccar
-          servicePort: 8082
+  entryPoints:
+    - web
+  routes:
+  - match: Host(`traccar.pik8s.home`) && PathPrefix(`/`)
+    kind: Rule
+    services:
+    - name: traccar
+      port: 8082

@@ -1,13 +1,31 @@
 # traccar-for-k8s
 
-using podman now instead of Docker.
+No need to build my own multi-arch docker image anymore as hub.docker.com has traccar/traccar:ubuntu multi-arch image now.
 
-podman multi-arch:
+Will use a Database for persistence...
 
-IMAGE=myimage; TAG=v1; MANIFEST=docker.io/generalinterest/$IMAGE:$TAG; podman manifest rm $MANIFEST; podman manifest create $MANIFEST ; for arch in arm arm64 amd64; do podman buildx build --manifest $MANIFEST --platform linux/$arch --tag $MANIFEST-$arch .; done
+Create the traccar myssql/mariadb database on your database server, change the password to something less obvious...
+
+create database traccar 
+create user 'traccar'@'%' identified by 'traccar';
+grant all privileges on traccar.* to 'traccar'@'%';
+flush privileges;
+
+You need to retrieve the conf/default.xml and conf/traccar.xml, either from their github repo, or you might start the docker image, and pull them from it.
+
+https://github.com/traccar/traccar/blob/master/setup/default.xml
+https://github.com/traccar/traccar/blob/master/setup/traccar.xml
 
 
 update conf/traccar.xml with your mysql database access
+
+    <entry key='database.driver'>com.mysql.cj.jdbc.Driver</entry>
+    <entry key='database.url'>jdbc:mysql://{mysqlHost}3306/traccar?allowMultiQueries=true&amp;autoReconnect=true&amp;useUnicode=yes&amp;characterEncoding=latin1&amp;sessionVariables=sql_mode=ANSI_QUOTES</entry>
+    <entry key='database.user'>traccar</entry>
+    <entry key='database.password'>traccar</entry>
+
+
+Note that the default.yml specifies the http listen port 8082.
 
 creating a configmap for the traccar.xml and default.yml
 
@@ -17,34 +35,9 @@ k apply -f traccar.yml
 
 k apply -f traccar_service.yml
 
-k apply -f traccar_client_service.yml
-
 k apply -f traccar_ingress.yml
 
 
+For the traccar clients to send their location data to traccar, there are many ports preconfigured.  Just open one for now
 
-
-cat Dockerfile
-
-FROM ubuntu
-
-ENV TRACCAR_VERSION 4.14
-
-WORKDIR /opt/traccar
-
-RUN apt-get update -y && \
-    apt-get install openjdk-17-jdk -y && \
-    apt-get install wget -y && \
-    apt-get install unzip -y && \
-    wget -O /tmp/traccar.zip --no-check-certificate https://github.com/traccar/traccar/releases/download/v$TRACCAR_VERSION/traccar-other-$TRACCAR_VERSION.zip && \
-    unzip -qo /tmp/traccar.zip -d /opt/traccar && \
-    rm /tmp/traccar.zip
-
-COPY traccar.xml /opt/traccar/conf/
-
-ENTRYPOINT ["java", "-Xms512m", "-Xmx512m", "-Djava.net.preferIPv4Stack=true"]
-
-CMD ["-jar", "tracker-server.jar", "conf/traccar.xml"]
-
-
-test 123
+k apply -f traccar_client_service.yml

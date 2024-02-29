@@ -5,10 +5,11 @@ metadata:
     run: traccar
   name: traccar
 spec:
+  type: NodePort
   ports:
-  - name: http
-    port: 8082
+  - name: traccar
     protocol: TCP
-    targetPort: 8082
+    port: 8082
+    targetPort: traccar-web-svc
   selector:
     run: traccar
